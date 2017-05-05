@@ -1,4 +1,4 @@
-#SVG 指可伸缩矢量图形 (Scalable Vector Graphics)
+# SVG 指可伸缩矢量图形 (Scalable Vector Graphics)
 >必须使用 .svg 后缀来保存,也可以使写在html文件内.后面的图像会覆盖前面的图形
 
 **使用 .svg 后缀来保存**
@@ -27,7 +27,7 @@
 </html>
 ```
 
-##各种形状
+## 各种形状
 1.矩形 <rect>
 2.圆形 <circle>
 3.椭圆 <ellipse>
@@ -48,20 +48,20 @@
  stoke-width:边框宽度
  stroke-opacity:边框透明度
  
-###矩形rect
+### 矩形rect
 ```
 <rect width="300" height="100" rx="20" ry="20"  style="fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)"/>
 ```
 rx 和 ry 属性可使矩形产生圆角。
 
-###圆形circle
+### 圆形circle
 ```
 <circle cx="100" cy="50" r="40" stroke="black" stroke-width="2" fill="red"/>
 ```
 cx和cy属性定义圆点的x和y坐标。如果省略cx和cy，圆的中心会被设置为(0, 0)
 r属性定义圆的半径
 
-###椭圆ellipse
+### 椭圆ellipse
 ```
  <ellipse cx="300" cy="80" rx="100" ry="50" style="fill:yellow;stroke:purple;stroke-width:2"/>
 ```
@@ -70,7 +70,7 @@ cy属性定义的椭圆中心的y坐标
 rx属性定义的水平半径
 ry属性定义的垂直半径
 
-###直线line
+### 直线line
 ```
  <line x1="0" y1="0" x2="200" y2="200"  style="stroke:rgb(255,0,0);stroke-width:2"/>
 ```
@@ -79,7 +79,7 @@ y1 属性在 y 轴定义线条的开始
 x2 属性在 x 轴定义线条的结束
 y2 属性在 y 轴定义线条的结束
 
-###多边形polygon
+### 多边形polygon
 ```
 <polygon points="200,10 250,190 160,210"  style="fill:lime;stroke:purple;stroke-width:1"/>
 ```
@@ -89,13 +89,13 @@ points="x1,y1 x2,y2 x3,y3....."每个坐标以空格区分
  fill-rule属性用于指定使用哪一种算法去判断画布上的某区域是否属于该图形“内部”
  fill-rule:填充规则 nonzero(默认) | evenodd | inherit  http://blog.csdn.net/mishiwjp/article/details/53484235
  
-###曲线polyline
+### 曲线polyline
 polyline元素是用于创建任何只有直线的形状
 ```
 <polyline points="20,20 40,25 60,40 80,120 120,140 200,180"  style="fill:none;stroke:black;stroke-width:3" />
 ```
 
-###路径path
+### 路径path
 ```
 <path d="M150 0 L75 200 L225 200 Z" />
 ```
@@ -111,7 +111,7 @@ polyline元素是用于创建任何只有直线的形状
 * Z = closepath()：关闭路径
 >注意：以上所有命令均允许小写字母。大写表示绝对定位，小写表示相对定位。
 
-###文本text 
+### 文本text 
 ```
 <text x="0" y="15" fill="red"  transform="rotate(30 20,40)">I love SVG</text>
 ```
@@ -140,7 +140,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink">
 * 分组元素 <g>，是 SVG 画布中的元素，意思是 group。此元素是将其他元素进行组合的容器
 
 
-##SVG 动画
+## SVG 动画
 * \<set> 虽然set虽然不能触发连续的动画，但是，其还是可以实现基本的延迟功能。就是指：可以在特定时间之后修改某个属性值
 * \<animate> 基础动画元素。实现**单属性**的动画过渡效果。
 * \<animateColor>
