@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <style>
+        /*text-anchor是文本显示的方向，其实也就是位置(x,y)处于文本的位置。这个属性有start,middle和end三种值。*/
+        .title{font-family:Arial,微软雅黑;font-size:18px;text-anchor:middle;}
+        .subTitle{font-family:Arial,宋体;font-size:12px;text-anchor:middle;fill:#666}
+
+    </style>
+</head>
+<body>
+<script>
+    var dataset=[{date:2000,value:80},{date:2001,value:80},{date:2002,value:80},{date:2003,value:80}
+        ,{date:2004,value:20},{date:2005,value:40}];//数据
+
+    var parseDataset=[];
+    for(var i=0,len=dataset.length;i<len;i++){
+        parseDataset.push(dataset[i].value)
+    }
+    var w=800;
+    var h=400;
+    var padding=40;
+    var head_height=padding;
+    var foot_height=padding;
+    var title="数据波动";
+    var subTitle="2013年1月 至 2013年6月";
+
+    var svg=d3.select("body")
+            .append("svg")
+            .attr("width",w)
+            .attr("height",h);
+
+    //添加背景
+    svg.append("g")
+            .append("rect")
+            .attr("x",0)
+            .attr("y",0)
+            .attr("width",w)
+            .attr("height",h)
+            .style("fill","#FFF")
+            .style("stroke-width",2)
+            .style("stroke","#E7E7E7");
+
+    svg.append("g")
+            .append("text")
+            .text(title)
+            .attr("class","title")
+            .attr("x",w/2)
+            .attr("y",head_height);
+
+    head_height+=30;
+    svg.append("g")
+            .append("text")
+            .text(subTitle)
+            .attr("class","subTitle")
+            .attr("x",w/2)
+            .attr("y",head_height);
+
+    head_height+=20;
+
+    var xScale = d3.scale.linear()
+            .domain([0,dataset.length-1])
+            .range([padding,w-padding]);
+
+    var xAxis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom")
+            .ticks(dataset.length);
+
+    var xBar=svg.append("g")
+            .attr("class","axis")
+            .attr("transform", "translate(0," + (h - foot_height) + ")")
+            .call(xAxis);
+    xBar.selectAll("text")
+            .text(function(d,i){return dataset[i].date;});
+
+    maxdata=getMaxdata(dataset);
+    var yScale = d3.scale.linear()
+            .domain([0,100])
+            .range([h-foot_height,head_height]);
+
+    var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left")
+            .ticks(10);
+
+    var yBar=svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate("+padding+",0)")
+            .call(yAxis);
+
+    function getMaxdata(arr) {
+        maxdata=0;
+        for(var i=1,len=arr.length;i<len;i++){
+            maxdata=d3.max([maxdata,arr[i].value])
+        }
+        return maxdata
+    }
+
+    var color = d3.scale.category10();
+    var line = d3.svg.line()
+            .x(function(d,i){return xScale(i);})
+            .y(function(d){return yScale(d);});
+    var group=svg.append("g");
+    var path=group.append("path")
+            .attr("d",line(parseDataset))
+            .style("fill","none")
+            .style("stroke-width",1)
+            .style("stroke",function(d,i){
+                return color(i)})
+            .style("stroke-opacity",0.9);
+
+    group.selectAll("circle")
+            .data(parseDataset)
+            .enter()
+            .append("circle")
+            .attr("cx", function(d,i) {
+                return xScale(i);
+            })
+            .attr("cy", function(d) {
+                return yScale(d);
+            })
+            .attr("cursor","pointer")
+            .attr("r",5)
+            .attr("fill","#F00");
+    group.selectAll("text")
+            .data(parseDataset)
+            .enter()
+            .append("text")
+            .attr("x", function(d,i) {
+                return xScale(i);
+            })
+            .attr("y", function(d) {
+                return yScale(d);
+            })
+            .attr("fill","#000")
+            .text(function(d){
+                return d;
+            });
+    function drawChart() {
+        for(var i=0,len=dataset.length;i<len;i++){
+        }
+        path.transition().duration(800).attr("d",line(parseDataset));
+        group .selectAll("circle")
+                .data(parseDataset)
+        group.selectAll("circle")
+                .transition()
+                .duration(800)
+                .attr("cy", function(d) {
+                    return yScale(d);
+                });
+        group.selectAll("text")
+                .data(parseDataset)
+                .enter()
+                .append("text")
+                .attr("y", function(d) {
+                    return yScale(d);
+                })
+                .attr("fill","#000");
+        group.selectAll("text")
+                .transition()
+                .duration(800)
+                .attr("y", function(d) {
+                    return yScale(d);
+                })
+                .text(function(d){
+                    return d;
+                });
+    }
+
+    function addData() {
+        var adddata=parseInt(Math.random()*100);
+        var adddata2=parseInt(Math.random()*100);
+        var index=parseInt(Math.random()*parseDataset.length);
+        var index2=parseInt(Math.random()*parseDataset.length);
+        parseDataset[index]=adddata;
+        dataset[index].value=adddata;
+        parseDataset[index2]=adddata;
+        dataset[index2].value=adddata;
+        drawChart()
+    }
+</script>
+<p align="left">
+    <button onClick="javascript:addData();">添加数据</button>
+</p>
+</body>
+</html>
