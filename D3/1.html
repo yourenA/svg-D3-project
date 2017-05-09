@@ -54,10 +54,10 @@
      * d3.scale.linear():构建一个线性比例尺。
      * d3.scale.linear().domain([]):定义域 指定数据源的范围
      * d3.scale.linear().range([]):值域    指定数据源需要映射的范围
-     * d3.scale.linear().max():选取一个数据中的最大值
+     * d3.max():选取一个数据中的最大值
      * */
     var linear = d3.scale.linear()
-            .domain([0, d3.max(dataset)])
+            .domain([0, d3.max(dataset)])//注意里面是数组
             .range([0, 200]);
 
     /**
@@ -75,7 +75,7 @@
      * svg.append("g") .call(axis); 添加坐标轴
      * */
     svg.append("g")
-            .attr("class","axis")
+            .attr("class","axis")//添加class，方便在style中使用
             .attr("transform","translate(20,130)")
             .call(axis);
 
@@ -88,14 +88,14 @@
      * */
     svg.selectAll("rect")
             .data(dataset)
-            .enter()//selectAll("rect")页面中还没有rect元素，使用占位符
-            .append("rect")
+            .enter()//返回占位符
+            .append("rect")//对占位符使用append
             .attr("x",20)
             .attr("y",function(d,i){
                 return i * rectHeight;
             })
             .attr("width",function(d){
-                return linear(d);   //在这里用比例尺,d3.scale.linear() 的返回值是可以当做函数来使用的
+                return linear(d);   // linear(d)根据比例尺获取显示的宽度，在这里用比例尺,d3.scale.linear() 的返回值是可以当做函数来使用的
             })
             .attr("height",rectHeight-2)
             .attr("fill","steelblue");

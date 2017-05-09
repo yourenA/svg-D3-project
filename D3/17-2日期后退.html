@@ -250,9 +250,17 @@
         }
 
     }
-
+    var numbenr=100
     function addData() {
-        var adddata=parseInt(Math.random()*100);
+        var adddata
+        if(numbenr<=5) {
+            adddata =numbenr+5;
+            numbenr=numbenr+5
+        }else{
+             adddata=numbenr-5;
+            numbenr=numbenr-5
+        }
+
         parseDataset.push(adddata)
         dataset.push({date:dataset[dataset.length-1].date+1,value:adddata})
         if(parseDataset.length>12){

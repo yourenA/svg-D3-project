@@ -20,12 +20,12 @@
     for(var i=0;i<100;i++){
         dataset.push( rand() );
     }
-
+    console.log("dataset",dataset)
     var bin_num = 15;
     var histogram = d3.layout.histogram()
             .range([-50,50]) //range： 区间的范围
             .bins(bin_num)  //bins： 分隔数
-            .frequency(true);//frequency： 若值为 true，则统计的是个数；若值为 false，则统计的是概率
+            .frequency(false);//frequency： 若值为 true，则统计的是个数；若值为 false，则统计的是概率
 
     var data = histogram(dataset);
 

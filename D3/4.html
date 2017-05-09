@@ -17,7 +17,8 @@
             .attr("width", width)
             .attr("height", height);
     /**
-     *  d3.layout.pie():将普通数据转换为绘图(饼状图)所需数据
+     * d3.layout数据转换
+     * d3.layout.pie():将普通数据转换为绘图(饼状图)所需数据
      * */
     var pie = d3.layout.pie();//不能直接 d3.layout.pie(dataset)，否则会出错
     var piedata =pie(dataset);
@@ -26,6 +27,7 @@
     var innerRadius = 0; //内半径，为0则中间没有空白
 
     /**
+     * d3.svg绘图图形
      * d3.svg.arc(): 新建一个弧度生成器。
      * */
     var arc = d3.svg.arc()  //弧生成器

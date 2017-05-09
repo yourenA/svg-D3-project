@@ -47,15 +47,15 @@
 
     /**
      * d3.scale.ordinal: 构造一个序数比例尺。
-     * d3.scale.ordinal().domain([]):制定序号
+     * d3.scale.ordinal().domain([]):指定序号
      * d3.scale.ordinal()rangeRoundBands([])制定映射范围
-     * d3.range(length) : 产生0至length-1的的数组
+     * d3.range(length) : 产生0至length-1的的数组[0,1,2,3,4,5]
      * d3.scale.ordinal() .rangeRoundBands([]):指定输出范围为连续区间，区间段的起点均为整数。
      * */
     //x轴的比例尺
     var xScale = d3.scale.ordinal()
             .domain(d3.range(dataset.length))
-            .rangeRoundBands([0, width - padding.left - padding.right]);
+            .rangeRoundBands([0, width - padding.left - padding.right]);//0-7映射为0-340
 
     //y轴的比例尺
     var yScale = d3.scale.linear()
@@ -89,11 +89,11 @@
             .attr("class","MyRect")
             .attr("transform","translate(" + padding.left + "," + padding.top + ")")
             .attr("x", function(d,i){
-                //x轴根据index来设置
+                //x轴根据index来设置 d3.scale.ordinal与index相结合
                 return xScale(i) + rectPadding/2;
             } )
             .attr("y",function(d){
-                //y轴根据data来设置
+                //y轴根据data来设置 d3.scale.linear()与data相结合
                 return yScale(d);
             })
             .attr("width", xScale.rangeBand() - rectPadding )
@@ -123,7 +123,7 @@
                 return xScale(i) + rectPadding/2;
             })
             .attr("y",function(d){
-                var min = yScale.domain()[0];// yScale.domain()[0]获取比例尺最小的一个元素
+                var min = yScale.domain()[0];// yScale.domain()[0]获取比例尺最小的一个元素，因为要由下往上运动
                 return yScale(min);
             })
             .transition()
@@ -135,7 +135,7 @@
             .attr("y",function(d){
                 return yScale(d);
             })
-            .attr("dx",function(){
+            .attr("dx",function(){//dx="在字符的长度列表中移动相对最后绘制标志符号的绝对位置"
                 return (xScale.rangeBand() - rectPadding)/2;
             })
             .attr("dy",function(d){
